@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="same-origin">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Où c'est qu'on mange ?</title>
+
+    <meta name="description" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link crossorigin="anonymous" rel="stylesheet" href="https://rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap-reboot.css">
+
+    <script defer crossorigin="anonymous" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default"></script>
+</head>
+
+<body>
+
+    <script>
+        var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
+
+        // Source MDN: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+        // function reqListener() {
+        //     console.log(this.responseText);
+        // }
+
+        // var oReq = new XMLHttpRequest();
+        // oReq.addEventListener("load", reqListener);
+        // oReq.open("GET", json);
+        // oReq.send();
+
+
+        // Source the Internets (stack overflow )
+        // function fetchJSONFile(path, callback) {
+        //     var httpRequest = new XMLHttpRequest();
+        //     httpRequest.onreadystatechange = function () {
+        //         if (httpRequest.readyState === 4) {
+        //             if (httpRequest.status === 200) {
+        //                 var data = JSON.parse(httpRequest.responseText);
+        //                 if (callback) callback(data);
+        //             }
+        //         }
+        //     };
+        //     httpRequest.open('GET', path);
+        //     httpRequest.send();
+        // }
+
+        // // this requests the file and executes a callback with the parsed result once
+        // //   it is available
+        // fetchJSONFile(json, function (data) {
+        //     // do something with your data
+        //     console.log(data);
+        // });
+    </script>
+
+</body>
+
+</html>
