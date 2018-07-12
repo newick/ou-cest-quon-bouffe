@@ -57,15 +57,24 @@
 
             // create a loop to add li elements in the list, inside them display places' name
             for (var j = 0; j < places.length; j++) {
+                // create a new article element
                 var item = document.createElement("article");
-                var placeName = places[j].name;
-                var placeAddress = places[j].address;
+                // create a new h2 element
                 var name = document.createElement("h2");
+                // create a new address element
                 var address = document.createElement("address");
+                // stock places' name
+                var placeName = places[j].name;
+                // stock places' address
+                var placeAddress = places[j].address;
+                // specify that h2 has as a value place's name
                 name.textContent = placeName;
+                // specify that address has as a value place's address
                 address.textContent = placeAddress;
+                // insert in the article element the title and the address
                 item.appendChild(name);
                 item.appendChild(address);
+                // insert in the section the article
                 list.appendChild(item);
             }
         }
