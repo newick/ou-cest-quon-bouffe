@@ -18,6 +18,8 @@
 
 <body>
 
+    <ul id="list"></ul>
+
     <script>
         // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
 
@@ -25,8 +27,8 @@
         var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
 
         // create a request 
-        var request = new XMLHttpRequest(); 
-        // 
+        var request = new XMLHttpRequest();
+        // specify that we want to "get" the content and the location is specify in the var "json"
         request.open("GET", json);
         // specify the type of data waited, here json
         request.responseType = "json";
@@ -34,16 +36,33 @@
         request.send();
 
         // when the request's answer is received
-        request.onload = function() {
+        request.onload = function () {
             // stocks the JSON in a var
             var places = request.response;
-            console.log(places)
+            console.log(places);
 
-            // stock JSON detailed values in vars
-            for (var i=0; i<places.length; i++) {
+            // stock JSON detailed values in vars, just to console.log them
+            for (var i = 0; i < places.length; i++) {
                 var name = places[i].name;
                 var address = places[i].address;
-                console.log(name + ' ' + address);
+                console.log("Nom : " + name + ' | ' + "Adresse : " + address);
+            }
+
+            display(places);
+        }
+
+        function display(places) {
+            // target the element ul named "list"
+            var list = document.getElementById("list");
+
+            // create a loop to add li elements in the list, inside them display places' name
+            for (var j = 0; j < places.length; j++) {
+                var item = document.createElement("li");
+                var name = places[j].name;
+                var title = document.createElement("h2");
+                title.textContent = name;
+                item.appendChild(title);
+                list.appendChild(item);
             }
         }
     </script>
