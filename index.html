@@ -18,7 +18,7 @@
 
 <body>
 
-    <ul id="list"></ul>
+    <section id="list"></section>
 
     <script>
         // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
@@ -57,11 +57,15 @@
 
             // create a loop to add li elements in the list, inside them display places' name
             for (var j = 0; j < places.length; j++) {
-                var item = document.createElement("li");
-                var name = places[j].name;
-                var title = document.createElement("h2");
-                title.textContent = name;
-                item.appendChild(title);
+                var item = document.createElement("article");
+                var placeName = places[j].name;
+                var placeAddress = places[j].address;
+                var name = document.createElement("h2");
+                var address = document.createElement("address");
+                name.textContent = placeName;
+                address.textContent = placeAddress;
+                item.appendChild(name);
+                item.appendChild(address);
                 list.appendChild(item);
             }
         }
