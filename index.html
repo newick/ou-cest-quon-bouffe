@@ -19,40 +19,33 @@
 <body>
 
     <script>
+        // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
+
+        // save JSON URL in a var
         var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
 
-        // Source MDN: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
-        // function reqListener() {
-        //     console.log(this.responseText);
-        // }
+        // create a request 
+        var request = new XMLHttpRequest(); 
+        // 
+        request.open("GET", json);
+        // specify the type of data waited, here json
+        request.responseType = "json";
+        // send the request
+        request.send();
 
-        // var oReq = new XMLHttpRequest();
-        // oReq.addEventListener("load", reqListener);
-        // oReq.open("GET", json);
-        // oReq.send();
+        // when the request's answer is received
+        request.onload = function() {
+            // stocks the JSON in a var
+            var places = request.response;
+            console.log(places)
 
-
-        // Source the Internets (stack overflow )
-        // function fetchJSONFile(path, callback) {
-        //     var httpRequest = new XMLHttpRequest();
-        //     httpRequest.onreadystatechange = function () {
-        //         if (httpRequest.readyState === 4) {
-        //             if (httpRequest.status === 200) {
-        //                 var data = JSON.parse(httpRequest.responseText);
-        //                 if (callback) callback(data);
-        //             }
-        //         }
-        //     };
-        //     httpRequest.open('GET', path);
-        //     httpRequest.send();
-        // }
-
-        // // this requests the file and executes a callback with the parsed result once
-        // //   it is available
-        // fetchJSONFile(json, function (data) {
-        //     // do something with your data
-        //     console.log(data);
-        // });
+            // stock JSON detailed values in vars
+            for (var i=0; i<places.length; i++) {
+                var name = places[i].name;
+                var address = places[i].address;
+                console.log(name + ' ' + address);
+            }
+        }
     </script>
 
 </body>
