@@ -14,71 +14,75 @@
     <link crossorigin="anonymous" rel="stylesheet" href="https://rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap-reboot.css">
 
     <script defer crossorigin="anonymous" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
+
+            // save JSON URL in a var
+            var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
+
+            // create a request 
+            var request = new XMLHttpRequest();
+            // specify that we want to "get" the content and the location is specify in the var "json"
+            request.open("GET", json);
+            // specify the type of data waited, here json
+            request.responseType = "json";
+            // send the request
+            request.send();
+
+            // when the request's answer is received
+            request.onload = function () {
+                // stocks the JSON in a var
+                var places = request.response;
+                console.log(places);
+
+                // stock JSON detailed values in vars, just to console.log them
+                for (var i = 0; i < places.length; i++) {
+                    var name = places[i].name;
+                    var address = places[i].address;
+                    console.log("Nom : " + name + ' | ' + "Adresse : " + address);
+                }
+
+                display(places);
+            }
+
+            function display(places) {
+                // target the element ul named "list"
+                var list = document.getElementById("list");
+
+                // create a loop to add li elements in the list, inside them display places' name
+                for (var j = 0; j < places.length; j++) {
+                    // create a new article element
+                    var item = document.createElement("article");
+                    // create a new h2 element
+                    var name = document.createElement("h2");
+                    // create a new address element
+                    var address = document.createElement("address");
+                    // stock places' name
+                    var placeName = places[j].name;
+                    // stock places' address
+                    var placeAddress = places[j].address;
+                    // specify that h2 has as a value place's name
+                    name.textContent = placeName;
+                    // specify that address has as a value place's address
+                    address.textContent = placeAddress;
+                    // insert in the article element the title and the address
+                    item.appendChild(name);
+                    item.appendChild(address);
+                    // insert in the section the article
+                    list.appendChild(item);
+                }
+            }
+
+        })
+
+    </script>
 </head>
 
 <body>
 
     <section id="list"></section>
-
-    <script>
-        // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
-
-        // save JSON URL in a var
-        var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
-
-        // create a request 
-        var request = new XMLHttpRequest();
-        // specify that we want to "get" the content and the location is specify in the var "json"
-        request.open("GET", json);
-        // specify the type of data waited, here json
-        request.responseType = "json";
-        // send the request
-        request.send();
-
-        // when the request's answer is received
-        request.onload = function () {
-            // stocks the JSON in a var
-            var places = request.response;
-            console.log(places);
-
-            // stock JSON detailed values in vars, just to console.log them
-            for (var i = 0; i < places.length; i++) {
-                var name = places[i].name;
-                var address = places[i].address;
-                console.log("Nom : " + name + ' | ' + "Adresse : " + address);
-            }
-
-            display(places);
-        }
-
-        function display(places) {
-            // target the element ul named "list"
-            var list = document.getElementById("list");
-
-            // create a loop to add li elements in the list, inside them display places' name
-            for (var j = 0; j < places.length; j++) {
-                // create a new article element
-                var item = document.createElement("article");
-                // create a new h2 element
-                var name = document.createElement("h2");
-                // create a new address element
-                var address = document.createElement("address");
-                // stock places' name
-                var placeName = places[j].name;
-                // stock places' address
-                var placeAddress = places[j].address;
-                // specify that h2 has as a value place's name
-                name.textContent = placeName;
-                // specify that address has as a value place's address
-                address.textContent = placeAddress;
-                // insert in the article element the title and the address
-                item.appendChild(name);
-                item.appendChild(address);
-                // insert in the section the article
-                list.appendChild(item);
-            }
-        }
-    </script>
 
 </body>
 
