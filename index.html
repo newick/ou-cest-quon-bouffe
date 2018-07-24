@@ -19,12 +19,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
 
-            // save JSON URL in a var
+            // save JSON URL in a const
             var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
 
             // create a request 
-            var request = new XMLHttpRequest();
-            // specify that we want to "get" the content and the location is specify in the var "json"
+            const request = new XMLHttpRequest();
+            // specify that we want to "get" the content and the location is specify in the const "json"
             request.open("GET", json);
             // specify the type of data waited, here json
             request.responseType = "json";
@@ -33,14 +33,14 @@
 
             // when the request's answer is received
             request.onload = function () {
-                // stocks the JSON in a var
-                var places = request.response;
+                // stocks the JSON in a const
+                const places = request.response;
                 console.log(places);
 
-                // stock JSON detailed values in vars, just to console.log them
+                // stock JSON detailed values in consts, just to console.log them
                 for (var i = 0; i < places.length; i++) {
-                    var name = places[i].name;
-                    var address = places[i].address;
+                    const name = places[i].name;
+                    const address = places[i].address;
                     console.log("Nom : " + name + ' | ' + "Adresse : " + address);
                 }
 
@@ -49,20 +49,20 @@
 
             function display(places) {
                 // target the element ul named "list"
-                var list = document.getElementById("list");
+                const list = document.getElementById("list");
 
                 // create a loop to add li elements in the list, inside them display places' name
                 for (var j = 0; j < places.length; j++) {
                     // create a new article element
-                    var item = document.createElement("article");
+                    const item = document.createElement("article");
                     // create a new h2 element
-                    var name = document.createElement("h2");
+                    const name = document.createElement("h2");
                     // create a new address element
-                    var address = document.createElement("address");
+                    const address = document.createElement("address");
                     // stock places' name
-                    var placeName = places[j].name;
+                    const placeName = places[j].name;
                     // stock places' address
-                    var placeAddress = places[j].address;
+                    const placeAddress = places[j].address;
                     // specify that h2 has as a value place's name
                     name.textContent = placeName;
                     // specify that address has as a value place's address
