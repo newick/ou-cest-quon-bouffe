@@ -17,63 +17,98 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
-
             // save JSON URL in a const
-            var json = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
+            const jsonURL = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
 
-            // create a request 
-            const request = new XMLHttpRequest();
-            // specify that we want to "get" the content and the location is specify in the const "json"
-            request.open("GET", json);
-            // specify the type of data waited, here json
-            request.responseType = "json";
-            // send the request
-            request.send();
+            // create a request with fetch(), warning with browser compatibility
+            // source https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch
 
-            // when the request's answer is received
-            request.onload = function () {
-                // stocks the JSON in a const
-                const places = request.response;
-                console.log(places);
+            fetch(jsonURL)
+                // get the response as in JSON format. Used arrow function instead of function()(https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Fonctions/Fonctions_fl%C3%A9ch%C3%A9es)
+                // /*** old way ***\
+                // .then(function (response) { 
+                //     return response.json();
+                // })
+                .then(response => response.json())
 
-                // stock JSON detailed values in consts, just to console.log them
-                for (var i = 0; i < places.length; i++) {
-                    const name = places[i].name;
-                    const address = places[i].address;
-                    console.log("Nom : " + name + ' | ' + "Adresse : " + address);
-                }
+                // console.log the results 
+                .then(jsonRes => {
+                    // let is used as a var usable only in this part (@David, isn't it?)
+                    var data = jsonRes;
+                    console.log(data);
 
-                display(places);
-            }
+                    for (let i of data) {
+                        console.log("Nom :", i.name, " | Adresse :", i.address)
+                    }
 
-            function display(places) {
-                // target the element ul named "list"
-                const list = document.getElementById("list");
+                    for (let j of data) {
+                        var item = document.createElement("article");
+                        var name = document.createElement("h2");
+                        var address = document.createElement("address");
+                        var placeName = j.name;
+                        var placeAddress = j.address;
+                        name.textContent = placeName;
+                        address.textContent = placeAddress;
 
-                // create a loop to add li elements in the list, inside them display places' name
-                for (var j = 0; j < places.length; j++) {
-                    // create a new article element
-                    const item = document.createElement("article");
-                    // create a new h2 element
-                    const name = document.createElement("h2");
-                    // create a new address element
-                    const address = document.createElement("address");
-                    // stock places' name
-                    const placeName = places[j].name;
-                    // stock places' address
-                    const placeAddress = places[j].address;
-                    // specify that h2 has as a value place's name
-                    name.textContent = placeName;
-                    // specify that address has as a value place's address
-                    address.textContent = placeAddress;
-                    // insert in the article element the title and the address
-                    item.appendChild(name);
-                    item.appendChild(address);
-                    // insert in the section the article
-                    list.appendChild(item);
-                }
-            }
+                        item.append(name, address)
+
+                        list.append(item)
+                    }
+                })
+
+            // // create a request with XMLHttpRequest()
+            // // source: https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON
+            // const request = new XMLHttpRequest();
+            // // specify that we want to "get" the content and the location is specify in the const "json"
+            // request.open("GET", jsonURL);
+            // // specify the type of data waited, here json
+            // request.responseType = "json";
+            // // send the request
+            // request.send();
+
+            // // when the request's answer is received
+            // request.onload = function () {
+            //     // stocks the JSON in a const
+            //     const places = request.response;
+            //     console.log(places);
+
+            //     // stock JSON detailed values in consts, just to console.log them
+            //     for (var i = 0; i < places.length; i++) {
+            //         const name = places[i].name;
+            //         const address = places[i].address;
+            //         console.log("Nom : " + name + ' | ' + "Adresse : " + address);
+            //     }
+
+            //     display(places);
+            // }
+
+            // function display(places) {
+            //     // target the element ul named "list"
+            //     const list = document.getElementById("list");
+
+            //     // create a loop to add li elements in the list, inside them display places' name
+            //     for (var j = 0; j < places.length; j++) {
+            //         // create a new article element
+            //         const item = document.createElement("article");
+            //         // create a new h2 element
+            //         const name = document.createElement("h2");
+            //         // create a new address element
+            //         const address = document.createElement("address");
+            //         // stock places' name
+            //         const placeName = places[j].name;
+            //         // stock places' address
+            //         const placeAddress = places[j].address;
+            //         // specify that h2 has as a value place's name
+            //         name.textContent = placeName;
+            //         // specify that address has as a value place's address
+            //         address.textContent = placeAddress;
+            //         // insert in the article element the title and the address
+            //         item.appendChild(name);
+            //         item.appendChild(address);
+            //         // insert in the section the article
+            //         list.appendChild(item);
+            //     }
+            // }
 
         })
 
