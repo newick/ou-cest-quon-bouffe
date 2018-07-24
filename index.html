@@ -37,6 +37,7 @@
                     var data = jsonRes;
                     console.log(data);
 
+                    // used for…of instead of for (var i = 0; i < data.length; i++)(https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/for...of)
                     for (let i of data) {
                         console.log("Nom :", i.name, " | Adresse :", i.address)
                     }
@@ -51,7 +52,6 @@
                         address.textContent = placeAddress;
 
                         item.append(name, address)
-
                         list.append(item)
                     }
                 })
