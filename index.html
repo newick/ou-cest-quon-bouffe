@@ -17,7 +17,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const jsonURL = 'https://raw.githubusercontent.com/newick/ou-cest-quon-bouffe/master/places.json'
+            const jsonURL = 'https://rawgit.com/newick/ou-cest-quon-bouffe/data/places.json'
 
             fetch(jsonURL)
 
@@ -25,11 +25,6 @@
 
                 .then(jsonRes => {
                     var data = jsonRes;
-                    console.log(data);
-
-                    for (let i of data) {
-                        console.log("Nom :", i.name, " | Adresse :", i.address)
-                    }
 
                     for (let j of data) {
                         var item = document.createElement("article");
