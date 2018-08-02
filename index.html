@@ -41,11 +41,36 @@
                 })
         })
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiURL = 'https://api.github.com/repos/newick/ou-cest-quon-bouffe'
+            const branchName = 'data'
+            const fileName = 'places.json'
+            const url = apiURL.concat('/contents/',fileName,'?ref=',branchName)
+
+            fetch(url)
+                .then(response => response.json())
+                .then(value => {
+                    console.log(value)
+                })
+
+        })
+
     </script>
 </head>
 
 <body>
 
+    <h2>Ajouter un lieu</h2>
+    <form action="">
+        <label for="name">Nom</label>
+        <input type="text" name="name" id="name">
+        <label for="address">Adresse</label>
+        <input type="text" name="address" id="address">
+        <input type="submit" value="Envoyer">
+    </form>
+
+
+    <h2>Lieux déjà listés</h2>
     <section id="list"></section>
 
 </body>
