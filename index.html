@@ -20,20 +20,18 @@
             const jsonURL = 'https://rawgit.com/newick/ou-cest-quon-bouffe/data/places.json'
 
             fetch(jsonURL)
-
                 .then(response => response.json())
-
                 .then(jsonRes => {
                     var data = jsonRes;
 
                     for (let j of data) {
-                        var item = document.createElement("article");
-                        var name = document.createElement("h2");
-                        var address = document.createElement("address");
-                        var placeName = j.name;
-                        var placeAddress = j.address;
-                        name.textContent = placeName;
-                        address.textContent = placeAddress;
+                        var item = document.createElement("article")
+                        var name = document.createElement("h2")
+                        var address = document.createElement("address")
+                        var placeName = j.name
+                        var placeAddress = j.address
+                        name.textContent = placeName
+                        address.textContent = placeAddress
 
                         item.append(name, address)
                         list.append(item)
@@ -41,19 +39,62 @@
                 })
         })
 
-        document.addEventListener('DOMContentLoaded', function () {
+        const sendValues = function () {
             const apiURL = 'https://api.github.com/repos/newick/ou-cest-quon-bouffe'
             const branchName = 'data'
             const fileName = 'places.json'
-            const url = apiURL.concat('/contents/',fileName,'?ref=',branchName)
+            const token = 'c8feea1ac932aa1f4ec7214b6cef9c2d3736694e'
+            const url = apiURL.concat('/contents/', fileName, '?ref=', branchName, '&access_token=', token)
 
+            const data = { name: 'plop', address: 'là bas' };
+
+            // Github requires few things to be able to commit: 
+            // - a path
+            const commitPath = apiURL.concat('/contents/', fileName, '?ref=', branchName)
+
+            // - a message
+            const commitMessage = "nouvel endroit"
+
+            // - convert content to base64:
+            // JSON.stringify transforms JSON array to a string
+            const string = JSON.stringify(data)
+            // btoa function transforms a string to a base64 string
+            const commitBase64 = btoa(string)
+
+            // - the sha of the file to edit
+            var commitSha = ""
             fetch(url)
                 .then(response => response.json())
-                .then(value => {
-                    console.log(value)
-                })
+                .then(jsonRes => commitSha = jsonRes.sha)
 
-        })
+            // - the branch name
+            const commitBranch = branchName
+
+            const commitValue =
+            {
+                message: commitMessage,
+                path: commitPath,
+                content: commitBase64,
+                sha: commitSha
+            }
+            console.log(commitValue)
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `token ${token}`
+                },
+                content: {
+                    message: commitMessage,
+                    content: commitBase64,
+                    sha: commitSha
+                }
+            }
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => console.log('Success:', response))
+            )
+        }
 
     </script>
 </head>
@@ -66,7 +107,7 @@
         <input type="text" name="name" id="name">
         <label for="address">Adresse</label>
         <input type="text" name="address" id="address">
-        <input type="submit" value="Envoyer">
+        <button type="button" onclick="sendValues()">Balance</button>
     </form>
 
 
