@@ -37,64 +37,60 @@
                         list.append(item)
                     }
                 })
+
+
+            const form = document.querySelector("form")
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const apiURL = 'https://api.github.com/repos/newick/ou-cest-quon-bouffe'
+                const branchName = 'data'
+                const fileName = 'places.json'
+                const token = ''
+                const url = apiURL.concat('/contents/', fileName, '?ref=', branchName, '&access_token=', token)
+
+                const data = { name: 'plop', address: 'là bas' };
+
+                // Github requires few things to be able to commit: 
+                // - a path = file name
+                const commitPath = fileName
+
+                // - a message
+                const commitMessage = "nouvel endroit"
+
+                // - convert content to base64:
+                // JSON.stringify transforms JSON array to a string
+                const string = JSON.stringify(data)
+                // btoa function transforms a string to a base64 string
+                const commitBase64 = btoa(string)
+
+                // - the sha of the file to edit
+                fetch(url)
+                    .then(response => response.json())
+                    .then(jsonRes => {
+                        const commitSha = jsonRes.sha;
+
+                        // - the branch name
+                        const commitBranch = branchName
+
+                        fetch(url, {
+                            method: 'PUT',
+                            body: JSON.stringify ({
+                                message: commitMessage,
+                                content: commitBase64,
+                                sha: commitSha,
+                                branch: commitBranch,
+                                path: commitPath
+                            })
+                        })
+                            .then(res => res.json())
+                            .catch(error => console.error('Error:', error))
+                            .then(response => console.log('Success:', response))
+
+
+                    })
+            })
         })
-
-        const sendValues = function () {
-            const apiURL = 'https://api.github.com/repos/newick/ou-cest-quon-bouffe'
-            const branchName = 'data'
-            const fileName = 'places.json'
-            const token = 'c8feea1ac932aa1f4ec7214b6cef9c2d3736694e'
-            const url = apiURL.concat('/contents/', fileName, '?ref=', branchName, '&access_token=', token)
-
-            const data = { name: 'plop', address: 'là bas' };
-
-            // Github requires few things to be able to commit: 
-            // - a path
-            const commitPath = apiURL.concat('/contents/', fileName, '?ref=', branchName)
-
-            // - a message
-            const commitMessage = "nouvel endroit"
-
-            // - convert content to base64:
-            // JSON.stringify transforms JSON array to a string
-            const string = JSON.stringify(data)
-            // btoa function transforms a string to a base64 string
-            const commitBase64 = btoa(string)
-
-            // - the sha of the file to edit
-            var commitSha = ""
-            fetch(url)
-                .then(response => response.json())
-                .then(jsonRes => commitSha = jsonRes.sha)
-
-            // - the branch name
-            const commitBranch = branchName
-
-            const commitValue =
-            {
-                message: commitMessage,
-                path: commitPath,
-                content: commitBase64,
-                sha: commitSha
-            }
-            console.log(commitValue)
-
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    Authorization: `token ${token}`
-                },
-                content: {
-                    message: commitMessage,
-                    content: commitBase64,
-                    sha: commitSha
-                }
-            }
-                .then(res => res.json())
-                .catch(error => console.error('Error:', error))
-                .then(response => console.log('Success:', response))
-            )
-        }
 
     </script>
 </head>
@@ -102,12 +98,12 @@
 <body>
 
     <h2>Ajouter un lieu</h2>
-    <form action="">
+    <form>
         <label for="name">Nom</label>
         <input type="text" name="name" id="name">
         <label for="address">Adresse</label>
         <input type="text" name="address" id="address">
-        <button type="button" onclick="sendValues()">Balance</button>
+        <button type="submit">Balance</button>
     </form>
 
 
