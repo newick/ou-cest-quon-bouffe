@@ -49,7 +49,7 @@
                 const token = ''
                 const url = apiURL.concat('/contents/', fileName, '?ref=', branchName, '&access_token=', token)
 
-                const data = { name: 'plop', address: 'là bas' };
+                const data = [{ name: 'plop', address: 'là bas' }];
 
                 // Github requires few things to be able to commit: 
                 // - a path = file name
